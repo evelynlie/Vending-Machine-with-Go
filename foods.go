@@ -83,6 +83,7 @@ func purchaseMeal(foods *LinkedList, coins *[]Coin) {
 	remaining := selectedFood.Price
 	var amount int
 	var total float64
+	var givenCoins []Coin
 
 	// Loop until the user cancels the purchase or the user has paid enough
 	for {
@@ -102,7 +103,7 @@ func purchaseMeal(foods *LinkedList, coins *[]Coin) {
 		// Check if the amount is a valid denomination
 		if amount == 5 || amount == 10 || amount == 20 || amount == 50 || amount == 100 || amount == 200 || amount == 500 || amount == 1000 || amount == 2000 || amount == 5000 {
 			// Add the coin to the coins slice
-			// addCoin(coins, amount)
+			givenCoins = append(givenCoins, Coin{Denomination: amount, Quantity: 1})
 		} else {
 			fmt.Println("Error: invalid denomination encountered.")
 			continue // Skip the rest of the loop
@@ -112,12 +113,9 @@ func purchaseMeal(foods *LinkedList, coins *[]Coin) {
 		total += float64(amount)
 
 		// Check if the total amount paid is enough
-		if total >= float64(selectedFood.Price)*100 {
+		if total > float64(selectedFood.Price)*100 {
 			// Calculate the change
 			change := (total - (selectedFood.Price * 100))
-
-			fmt.Println("Total:", total)
-			fmt.Println("Your change:", change)
 
 			// Split the change into the appropriate denominations
 			changeCoins := splitIntoDenominations(change, coins)
@@ -130,7 +128,21 @@ func purchaseMeal(foods *LinkedList, coins *[]Coin) {
 
 		// Calculate the remaining amount to pay
 		remaining = float64((selectedFood.Price)*100-total) / 100
+
+		// If the remaining amount is 0, break out of the loop
+		if remaining == 0 {
+			break
+		}
 	}
+
+	// If the user cancels the purchase, display a message
+	if remaining > 0 {
+		fmt.Println("Purchase cancelled")
+		return
+	}
+
+	// Update the coins slice with the coins given by the user
+	addCoin(coins, &givenCoins)
 }
 
 // Add Food Function
