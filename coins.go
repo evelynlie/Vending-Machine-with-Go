@@ -90,3 +90,43 @@ func printCoins(coins []Coin) {
 	fmt.Println("Total Value:", total)
 	fmt.Println()
 }
+
+func addCoin(coins *[]Coin) {
+
+}
+
+func splitIntoDenominations(change float64, coins *[]Coin) string {
+	var result []string
+
+	// Iterate over the coins in reverse order since the order is from lowest to highest
+	for i := range *coins {
+		coin := &(*coins)[i] // Use pointer to modify coin quantities
+
+		// Calculate how many of this coin can be used
+		coinValue := float64(coin.Denomination)
+
+		for change >= coinValue && coin.Quantity > 0 {
+			change -= coinValue
+			coin.Quantity--
+
+			// Format and append the denomination to the result
+			if coin.Denomination >= 100 {
+				result = append(result, fmt.Sprintf("$%d", coin.Denomination/100))
+			} else {
+				result = append(result, fmt.Sprintf("%dc", coin.Denomination))
+			}
+		}
+	}
+
+	// If change is still not zero, it means exact change could not be provided
+	if change > 0 {
+		return "Insufficient coins to provide exact change."
+	}
+
+	// Sort the result in descending order
+	sort.Slice(result, func(i, j int) bool {
+		return result[i] > result[j]
+	})
+
+	return fmt.Sprintf("Your change is %s", strings.Join(result, " "))
+}

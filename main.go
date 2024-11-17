@@ -103,7 +103,7 @@ func main() {
 			displayMealOptions(foods)
 
 		case 2:
-			// purchaseMeal(&foods, &coins)
+			purchaseMeal(&foods, &coins)
 
 		case 3:
 			saveAndExit(&foods, &coins)

@@ -76,6 +76,56 @@ func purchaseMeal(foods *LinkedList, coins *[]Coin) {
 	// Find the food item in the linked list
 	selectedFood := foods.Find(id)
 	fmt.Println("You have selected \""+selectedFood.Name, "-", selectedFood.Description+"\". This will cost you $", selectedFood.Price, ".")
+
+	fmt.Println("Please hand over the money - type in the value of each note/coin in cents.")
+	fmt.Println("Please enter ctrl-D or enter on a new line to cancel this purchase.")
+
+	remaining := selectedFood.Price
+	var amount int
+	var total float64
+
+	// Loop until the user cancels the purchase or the user has paid enough
+	for {
+		fmt.Print("You still need to give us $", remaining, ": ")
+		_, err := fmt.Scan(&amount)
+
+		// If there is an error, break out of the loop
+		if err != nil {
+			break
+		}
+
+		// Check if the amount is a valid denomination
+		if amount == 5 || amount == 10 || amount == 20 || amount == 50 || amount == 100 || amount == 200 || amount == 500 || amount == 1000 || amount == 2000 || amount == 5000 {
+			// Add the coin to the coins slice
+			// addCoin(coins, amount)
+		} else {
+			fmt.Println("Error: invalid denomination encountered.")
+			continue // Skip the rest of the loop
+		}
+
+		// Calculate the total amount paid
+		total += float64(amount)
+
+		// Check if the total amount paid is enough
+		if total >= float64(selectedFood.Price)*100 {
+			// Calculate the change
+			change := (total - (selectedFood.Price * 100))
+
+			fmt.Println("Total:", total)
+			fmt.Println("Your change:", change)
+
+			// Split the change into the appropriate denominations
+			changeCoins := splitIntoDenominations(change, coins)
+
+			// Display the change
+			fmt.Println(changeCoins)
+
+			break
+		}
+
+		// Calculate the remaining amount to pay
+		remaining = float64((selectedFood.Price)*100-total) / 100
+	}
 }
 
 // Add Food Function
