@@ -91,13 +91,22 @@ func printCoins(coins []Coin) {
 	fmt.Println()
 }
 
-func addCoin(coins *[]Coin, amount int) {
-	for i := range *coins {
-		coin := &(*coins)[i] // Use pointer to modify coin quantities
+func addCoin(coins *[]Coin, givenCoins *[]Coin) {
+	// Loop through the given coins
+	for _, givenCoin := range *givenCoins {
+		// Find the coin in the coins slice
+		found := false
+		for i := range *coins {
+			if (*coins)[i].Denomination == givenCoin.Denomination {
+				(*coins)[i].Quantity += givenCoin.Quantity
+				found = true
+				break
+			}
+		}
 
-		if coin.Denomination == amount {
-			coin.Quantity++
-			return
+		// If the coin is not found, add it to the coins slice
+		if !found {
+			*coins = append(*coins, givenCoin)
 		}
 	}
 }
