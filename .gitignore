@@ -1,0 +1,27 @@
+# Binaries
+VM
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Build artifacts
+*.out
+*.o
+*.a
+
+# Dependency directories (for vendored dependencies)
+vendor/
+
+# Generated files
+*.log
+*.tmp
+*.test
+*.prof
+
+# IDE/editor configurations
+.idea/
+.vscode/
+*.swp
+*~
+.DS_Store
