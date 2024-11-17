@@ -136,13 +136,16 @@ func purchaseMeal(foods *LinkedList, coins *[]Coin) {
 	}
 
 	// If the user cancels the purchase, display a message
-	if remaining > 0 {
+	if remaining > 0 && len(givenCoins) == 0 {
 		fmt.Println("Purchase cancelled")
 		return
 	}
 
 	// Update the coins slice with the coins given by the user
 	addCoin(coins, &givenCoins)
+
+	// Save the coins to the coins file
+	saveCoinsToFile(coins)
 }
 
 // Add Food Function
