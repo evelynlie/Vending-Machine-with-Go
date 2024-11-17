@@ -9,6 +9,39 @@ This is a simple vending machine system implemented in Go. The system is designe
 - View the total amount of money in the vending machine
 - Save the state of the vending machine to a file
 
+## Data Structures
+The system utilizes two core data structures: **Linked List** for food items and **Slice** for coins. Each of these data structures plays an essential role in the functionality of the vending machine.
+### 1. Food (Linked List)
+The `Food` struct represents an item in the vending machine with the following fields:
+- `ID` - The unique identifier of the food item
+- `Name` - The name of the food item
+- `Description` - The description of the food item
+- `Price` (float) - The price of the food item
+
+**Why Linked List?**
+A Linked List is used to store food items due to its efficiency when performing operations like inserting and deleting items. In a vending machine, food items may need to be added or removed dynamically, and the Linked List allows for such operations to be done quickly without the need to shift elements as in a slice.
+
+The Linked List is implemented using a `Node` struct, where each node contains a `Food` item and a pointer to the next node. The `LinkedList` struct has methods to:
+- Add a food item to the list.
+- Remove a food item by its ID.
+- Find a food item by its ID.
+- Display all food items in the vending machine.
+- Read and write the food items data to a file.
+
+### 2. Coin (Slice)
+The `Coin` struct represents a coin in the vending machine with:
+- `Denomination` (int) - Denomination of the coin in cents (e.g., 5 for 5¢, 100 for $1).
+- `Quantity` (int) - Number of coins available for that denomination.
+
+**Why Slice?**
+A `Slice` is used to store coins because the number of different coin denominations is fixed, and slices provide efficient random access. This makes the system efficient when managing the available coins for change and making purchases.
+
+The `Slice` of coins is represented as a list of `Coin` structs, and the following operations can be performed:
+- Add a coin or its quantity to the list.
+- Find a coin by denomination.
+- Display the current stock of coins in the vending machine.
+- Read and write the coins data to a file.
+
 ## Usage
 1. To use the vending machine system, you can run the Makefile with the following command to build the executable file, which is called `vm`:
     ```bash
