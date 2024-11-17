@@ -87,7 +87,8 @@ func printCoins(coins []Coin) {
 	}
 
 	fmt.Println("---------------------------")
-	fmt.Println("Total Value:", total)
+	formattedTotal := fmt.Sprintf("%.2f", float64(total)/100)
+	fmt.Println("Total Value: $", formattedTotal)
 	fmt.Println()
 }
 
