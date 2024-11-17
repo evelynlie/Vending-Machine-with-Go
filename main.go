@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"sort"
 )
 
 func displayMainMenu() {
@@ -48,9 +49,14 @@ func saveCoinsToFile(coins *[]Coin) {
 	}
 	defer file.Close()
 
+	// Sort the coins by denomination in descending order
+	sort.Slice(*coins, func(i, j int) bool {
+		return (*coins)[i].Denomination > (*coins)[j].Denomination
+	})
+
 	// Loop through the coins slice and write each coin to the file
 	for _, coin := range *coins {
-		_, err := file.WriteString(fmt.Sprintf("%d|%d\n", coin.Denomination, coin.Quantity))
+		_, err := file.WriteString(fmt.Sprintf("%d,%d\n", coin.Denomination, coin.Quantity))
 		if err != nil {
 			fmt.Println("Error writing to file:", err)
 			return
@@ -67,6 +73,8 @@ func saveAndExit(foods *LinkedList, coins *[]Coin) {
 
 	fmt.Println("Data saved.")
 	fmt.Println()
+
+	os.Exit(0)
 }
 
 func main() {
