@@ -91,8 +91,15 @@ func printCoins(coins []Coin) {
 	fmt.Println()
 }
 
-func addCoin(coins *[]Coin) {
+func addCoin(coins *[]Coin, amount int) {
+	for i := range *coins {
+		coin := &(*coins)[i] // Use pointer to modify coin quantities
 
+		if coin.Denomination == amount {
+			coin.Quantity++
+			return
+		}
+	}
 }
 
 func splitIntoDenominations(change float64, coins *[]Coin) string {
