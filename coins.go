@@ -68,7 +68,7 @@ func readCoinsFile() []Coin {
 
 // Print the balance of coins
 func printCoins(coins []Coin) {
-	fmt.Println("Balance Summary")
+	fmt.Println("\nBalance Summary")
 	fmt.Println("-------------")
 	fmt.Println("Denom | Quantity | Value")
 	fmt.Println("---------------------------")
