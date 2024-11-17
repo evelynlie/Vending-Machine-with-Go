@@ -87,10 +87,15 @@ func purchaseMeal(foods *LinkedList, coins *[]Coin) {
 	// Loop until the user cancels the purchase or the user has paid enough
 	for {
 		fmt.Print("You still need to give us $", remaining, ": ")
-		_, err := fmt.Scan(&amount)
+		_, err := fmt.Scanln(&amount) // Read the amount from the user until they press enter
 
 		// If there is an error, break out of the loop
 		if err != nil {
+			break
+		}
+
+		// If the user presses enter without entering a value, break out of the loop
+		if strconv.Itoa(amount) == "" {
 			break
 		}
 
